@@ -1,0 +1,3 @@
+[submodule "phabapi"]
+	path = phabapi
+	url = https://github.com/j0sh77/phabapi
