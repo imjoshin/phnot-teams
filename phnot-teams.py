@@ -83,14 +83,14 @@ class TeamsHandler(PhabHandler):
     # Helpers #
     ###########
     def _get_user_dm_channel(self, user):
-        return conf.SLACK_USER_IDS[user] if user and user in conf.SLACK_USER_IDS else conf.SLACK_TEAM_CHANNEL
+        return conf.SLACK_USER_IDS[user] if user and user in conf.SLACK_USER_IDS else None
 
     def _get_diff_owner(self, diff_id):
         diffs = self._read_all_diffs()
         return diffs[diff_id]['owner'] if diff_id in diffs else None
 
     def _set_diff(self, id, diff):
-        diffs = self.read_all_diffs()
+        diffs = self._read_all_diffs()
         diffs[id] = diff
         with open(conf.DIFF_FILE, 'w') as f:
             json.dump(diffs, f)
@@ -108,7 +108,6 @@ class TeamsHandler(PhabHandler):
         return diffs
 
     def _send_slack_message(self, message, channel):
-        log("Sending message to channel '{}':\n{}\n\n".format(channel, message))
         message = re.sub(r'([DT][0-9]{4,})', r'<https://phab.duosec.org/\1|\1>', message)
         data = {
             'channel': channel,
