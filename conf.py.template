@@ -1,0 +1,16 @@
+MAIL_SMTP = "imap.gmail.com"
+MAIL_USER = "EMAIL"
+MAIL_PASS = "PASS"
+MAIL_LABEL = "Phabricator"
+
+# Slack settings
+SLACK_USER_IDS = {
+    "USER": "CHANNEL",
+}
+
+SLACK_TEAM_CHANNEL = "TEAMCHANNEL"
+SLACK_BOT_USER = "Phabricator"
+SLACK_BOT_ICON = ":phabricator:"
+SLACK_HOOK = "https://hooks.slack.com/services/HOOK"
+
+DIFF_FILE = "diffs.txt"
