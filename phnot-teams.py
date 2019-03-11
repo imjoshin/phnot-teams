@@ -22,7 +22,7 @@ class TeamsHandler(PhabHandler):
         }
         self._set_diff(id, diff)
 
-        if owner in conf.SLACK_USER_IDS:
+        if act_user in conf.SLACK_USER_IDS:
             message = "@{} created a new revision - *{}: {}*".format(act_user, id, desc)
             self._send_slack_message(message, conf.SLACK_TEAM_CHANNEL)
 
