@@ -5,6 +5,8 @@ import re
 import subprocess
 import datetime
 import os
+import traceback
+import time
 
 sys.path.append('phabapi/src')
 from phabapi import PhabAPI, PhabHandler
@@ -132,7 +134,14 @@ def main():
         with open(conf.DIFF_FILE, 'w') as f:
             json.dump({}, f)
 
-    PhabAPI(TeamsHandler(), conf.MAIL_SMTP, conf.MAIL_USER, conf.MAIL_PASS, conf.MAIL_LABEL).start()
+    while True:
+        try:
+            PhabAPI(TeamsHandler(), conf.MAIL_SMTP, conf.MAIL_USER, conf.MAIL_PASS, conf.MAIL_LABEL).start()
+            time.sleep(5)
+        except SystemExit:
+            exit(0)
+        except:
+            log(traceback.format_exc(), log_file="errors")
 
 if __name__ == "__main__":
     main()
