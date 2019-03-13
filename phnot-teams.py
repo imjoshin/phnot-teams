@@ -51,7 +51,7 @@ class TeamsHandler(PhabHandler):
 
         if "-bot" in act_user:
             if comment and "failed" in comment:
-                message = ":robot: `{}` has a failed build for *{}: {}*".format(act_user, id, desc)
+                message = ":robot_face: `{}` has a failed build for *{}: {}*".format(act_user, id, desc)
             else:
                 return
 
