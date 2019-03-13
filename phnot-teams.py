@@ -52,7 +52,7 @@ class TeamsHandler(PhabHandler):
         if "-bot" in act_user:
             if comment and "failed" in comment:
                 message = ":robot: `{}` has a failed build for *{}: {}*".format(act_user, id, desc)
-            else
+            else:
                 return
 
         owner = self._get_diff_owner(id)
