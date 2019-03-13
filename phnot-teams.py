@@ -34,9 +34,9 @@ class TeamsHandler(PhabHandler):
         message = "*{}: {}* requires changes to proceed.".format(id, desc)
         if act_user:
             if "-bot" in act_user:
-                message = "{} has a failed build for *{}: {}*".format(act_user, id, desc)
-            else:
-                message = "@{} requested changes to *{}: {}*".format(act_user, id, desc)
+                return
+
+            message = "@{} requested changes to *{}: {}*".format(act_user, id, desc)
 
         owner = self._get_diff_owner(id)
         channel = self._get_user_dm_channel(owner)
@@ -46,11 +46,15 @@ class TeamsHandler(PhabHandler):
     def on_diff_comment(self, id, desc, act_user, comment):
         log("on_diff_comment: {}: {} ({}) - {}".format(id, desc, act_user, comment))
 
-        if "-bot" in act_user:
-            return
-
         comment_format = "```{}```".format(comment) if comment else ""
         message = "@{} added a comment to *{}: {}*.\n{}".format(act_user, id, desc, comment_format)
+
+        if "-bot" in act_user:
+            if comment and "failed" in comment:
+                message = ":robot: `{}` has a failed build for *{}: {}*".format(act_user, id, desc)
+            else
+                return
+
         owner = self._get_diff_owner(id)
         channel = self._get_user_dm_channel(owner)
         if owner != act_user and channel:
