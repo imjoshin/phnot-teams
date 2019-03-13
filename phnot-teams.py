@@ -124,8 +124,16 @@ class TeamsHandler(PhabHandler):
             'link_names': True
         }
 
-        cmd = "curl -X POST -H 'Content-type: application/json' --data '{}' {}".format(json.dumps(data), conf.SLACK_HOOK)
+        cmd = self._get_slack_curl(data)
         subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+        if conf.DEBUG:
+            data['channel'] = conf.DEBUG_CHANNEL
+            cmd = self._get_slack_curl(data)
+            subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
+    def _get_slack_curl(self, data):
+        return "curl -X POST -H 'Content-type: application/json' --data '{}' {}".format(json.dumps(data), conf.SLACK_HOOK)
 
 def log(str, log_file="log"):
 	p = "{} : {}".format(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'), str)

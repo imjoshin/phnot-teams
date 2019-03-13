@@ -14,3 +14,6 @@ SLACK_BOT_ICON = ":phabricator:"
 SLACK_HOOK = "https://hooks.slack.com/services/HOOK"
 
 DIFF_FILE = "diffs.txt"
+
+DEBUG = False
+DEBUG_CHANNEL = "DEBUGCHANNEL"
