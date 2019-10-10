@@ -16,7 +16,7 @@ class TeamsHandler(PhabHandler):
     # Messages #
     ############
     def on_diff_new(self, id, desc, act_user):
-        log("on_diff_new: {}: {}".format(id, desc))
+        log("on_diff_new: {}: {} ({})".format(id, desc, act_user))
 
         diff = {
             'desc': desc,
@@ -118,7 +118,7 @@ class TeamsHandler(PhabHandler):
         message = re.sub(r'([DT][0-9]{4,})', r'<https://phab.duosec.org/\1|\1>', message)
         data = {
             'channel': channel,
-            'text': message,
+            'text': message.replace("'", ""),
             'username': conf.SLACK_BOT_USER,
             'icon_emoji': conf.SLACK_BOT_ICON,
             'link_names': True
